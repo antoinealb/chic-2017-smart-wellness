@@ -11,6 +11,8 @@ SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
 add_executable(
     tests
     cpputest_runner.cpp
+    sun_sensor_driver_test.cpp
+    veml6075.c
     )
 
 target_link_libraries(
