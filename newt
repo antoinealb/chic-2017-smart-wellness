@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# If running on OSX, import settings from docker-machine
+if [ $(uname) = "Darwin" ]
+then
+    eval "$(docker-machine env)"
+fi
+
+# If running in debug mode, enter interactive mode
+if [ "$1" = "debug" ] || [ "$1" = "run" ]
+then
+    ti="-ti"
+fi
+
+# Finally, run the MyNewt container
+docker run \
+    -e NEWT_USER=$(id -u) \
+    -e NEWT_GROUP=$(id -g) \
+    -e NEWT_HOST=$(uname) \
+    $ti --rm --device=/dev/bus/usb --privileged \
+    -v $(pwd):/workspace -w /workspace \
+    mynewt/newt:latest \
+    /newt "$@"
