@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+set -u
+
+UNCRUSTIFY_FLAGS="-c uncrustify.cfg --replace --no-backup"
+
+# Get all the sources that are stored in Git
+SRC="$(git ls-tree --full-tree -r HEAD | grep -e "\.\(h\|c\|cpp\)$" | cut -f 2)"
+
+echo $SRC
+
+# run it twice because uncrustify is not very smart
+uncrustify $UNCRUSTIFY_FLAGS $SRC
+uncrustify $UNCRUSTIFY_FLAGS $SRC
