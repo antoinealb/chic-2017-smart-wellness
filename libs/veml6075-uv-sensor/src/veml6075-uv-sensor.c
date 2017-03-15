@@ -1,5 +1,5 @@
 #include <string.h>
-#include "veml6075.h"
+#include "veml6075-uv-sensor/veml6075-uv-sensor.h"
 
 #define VEML6075_ADDR 0x20
 

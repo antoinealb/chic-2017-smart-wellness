@@ -1,6 +1,6 @@
 #include <CppUTest/TestHarness.h>
 #include <CppUTestExt/MockSupport.h>
-#include "veml6075.h"
+#include "veml6075-uv-sensor/veml6075-uv-sensor.h"
 
 void i2c_mock_transmit(void *dev,
                        uint8_t addr,

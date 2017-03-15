@@ -1,5 +1,5 @@
-#ifndef VEML6075_H
-#define VEML6075_H
+#ifndef VEML6075_UV_SENSOR_H
+#define VEML6075_UV_SENSOR_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -63,5 +63,6 @@ uint16_t veml6075_read_uvb(veml6075_dev_t *dev);
 #ifdef __cplusplus
 }
 #endif
+
 
 #endif

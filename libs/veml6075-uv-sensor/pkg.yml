@@ -1,0 +1,9 @@
+pkg.name: libs/veml6075-uv-sensor
+pkg.description: "Vishay VEML6075 UV sensor driver"
+pkg.author: "Antoine Albertelli <antoine@antoinealb.net>"
+pkg.homepage: "http://chi.camp"
+pkg.keywords:
+  - uv
+  - sensor
+
+pkg.deps:
