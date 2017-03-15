@@ -1,0 +1,11 @@
+project.name: "sun_sensor"
+
+project.repositories:
+  - apache-mynewt-core
+
+# Grab core repo from Github (apache/incubator-mynewt-core)
+repository.apache-mynewt-core:
+  type: github
+  vers: 0-latest
+  user: apache
+  repo: incubator-mynewt-core

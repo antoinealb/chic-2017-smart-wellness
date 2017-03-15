@@ -34,3 +34,8 @@ build
 # Debug files
 *.dSYM/
 *.su
+
+# Apache myNewt
+/repos
+/bin
+
