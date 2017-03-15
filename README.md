@@ -26,3 +26,18 @@ If you prefer, you can install the Apache Newt tool, as documented in the [Getti
 
 The Apache Newt tool should indicate the location of the generated blinky executable.
 Since the simulator does not have an LED to blink, this version of blinky is not terribly exciting - a printed message indicating the current LED state.
+
+## Testing
+
+This project's unit tests are not written in the conventional Mynewt fashion, but with Cpputest
+They are built using CMake:
+
+```bash
+# Only needed once
+mkdir -p build
+cd build
+cmake ..
+
+# Build and runs tests
+make check
+```
