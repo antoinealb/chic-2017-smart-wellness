@@ -17,14 +17,14 @@
 # under the License.
 #
 
-pkg.name: hw/bsp/nrf52dk
+pkg.name: hw/bsp/breadboard
 pkg.type: bsp
-pkg.description: BSP definition for the Nordic nRF52 Development Kit (PCA 10040).
-pkg.author: "Apache Mynewt <dev@mynewt.incubator.apache.org>"
-pkg.homepage: "http://mynewt.apache.org/"
+pkg.description: BSP definition for the breadboard version of the Smart Wellness project CHIC 2017
+pkg.author: "Antoine Albertelli <antoine@antoinealb.net>"
+pkg.homepage: "http://chi.camp"
 pkg.keywords:
     - nrf52
-    - nrf52dk
+    - breadboard
 
 pkg.cflags:
     # Nordic SDK files require these defines.
