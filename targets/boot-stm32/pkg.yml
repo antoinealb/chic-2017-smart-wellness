@@ -1,0 +1,7 @@
+### Package: targets/boot-stm32
+pkg.name: "targets/boot-stm32"
+pkg.type: "target"
+pkg.description: Bootloader target for STM32 discovery
+pkg.author: Antoine Albertelli <antoine@antoinealb.net>
+pkg.homepage: http://chi.camp
+
