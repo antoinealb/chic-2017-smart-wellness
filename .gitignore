@@ -38,4 +38,5 @@ build
 # Apache myNewt
 /repos
 /bin
-
+.gdb_cmds
+.openocd_cmds
