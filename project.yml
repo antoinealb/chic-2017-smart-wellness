@@ -6,6 +6,6 @@ project.repositories:
 # Grab core repo from Github (apache/incubator-mynewt-core)
 repository.apache-mynewt-core:
   type: github
-  vers: 0-latest
+  vers: 0.0.1 # use master
   user: apache
   repo: incubator-mynewt-core
