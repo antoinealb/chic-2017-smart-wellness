@@ -24,6 +24,9 @@
 #include "os/os.h"
 #include "bsp/bsp.h"
 #include "hal/hal_gpio.h"
+#include "hal/hal_i2c.h"
+#include "mcu/stm32f4_bsp.h"
+#include "mcu/stm32f4xx_mynewt_hal.h"
 #ifdef ARCH_sim
 #include "mcu/mcu_sim.h"
 #endif
@@ -63,6 +66,9 @@ main(int argc, char **argv)
 
         /* Toggle the LED */
         hal_gpio_toggle(g_led_pin);
+
+        rc = hal_i2c_master_probe(0, 0x20, OS_TICKS_PER_SEC);
+        assert(rc == 0);
     }
     assert(0);
 

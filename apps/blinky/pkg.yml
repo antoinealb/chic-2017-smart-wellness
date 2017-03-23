@@ -28,3 +28,5 @@ pkg.deps:
   - "@apache-mynewt-core/kernel/os"
   - "@apache-mynewt-core/hw/hal"
   - "@apache-mynewt-core/sys/console/full"
+  - "@apache-mynewt-core/hw/mcu/stm/stm32f4xx"
+  - "libs/veml6075-uv-sensor"
