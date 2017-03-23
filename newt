@@ -7,7 +7,7 @@ set -u
 # If running on OSX, import settings from docker-machine
 if [ $(uname) = "Darwin" ]
 then
-    eval "$(docker-machine env)"
+    eval "$(docker-machine env --shell bash)"
 fi
 
 # If running in debug mode, enter interactive mode
