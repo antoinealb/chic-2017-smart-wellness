@@ -8,7 +8,9 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-typedef void (*veml7075_i2c_transmit_fn)(void *dev, uint8_t addr, const uint8_t *tx, size_t txbytes,
+#define VEML6075_CHIP_ID 0x0026
+
+typedef void (*veml7075_i2c_transmit_fn)(void *dev, uint8_t addr, uint8_t *tx, size_t txbytes,
                                          uint8_t *rx, size_t rxbytes);
 
 typedef struct {
@@ -58,6 +60,13 @@ uint16_t veml6075_read_uva(veml6075_dev_t *dev);
  * @returns The raw value coming from the sensor.
  */
 uint16_t veml6075_read_uvb(veml6075_dev_t *dev);
+
+/** Reads the Chip ID number for diagnostics.
+ *
+ * @param [in] dev The driver instance to use.
+ * @returns The chip ID returned by the sensor (should be VEMl6075_CHIP_ID).
+ */
+uint16_t veml6075_read_chip_id(veml6075_dev_t *dev);
 
 
 #ifdef __cplusplus

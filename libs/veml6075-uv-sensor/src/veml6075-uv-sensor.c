@@ -6,6 +6,7 @@
 #define VEML6075_CMD_CONF 0x00
 #define VEML6075_CMD_UVA  0x07
 #define VEML6075_CMD_UVB  0x09
+#define VEML6075_CMD_ID   0x0C
 
 
 void veml6075_init(veml6075_dev_t *dev, veml7075_i2c_transmit_fn transmit_fn, void *i2c_dev)
@@ -50,4 +51,14 @@ uint16_t veml6075_read_uvb(veml6075_dev_t *dev)
     dev->i2c_transmit(dev->i2c_dev, VEML6075_ADDR, msg, sizeof(msg), value, sizeof(value));
 
     return (value[1] << 8) + value[0];
+}
+
+uint16_t veml6075_read_chip_id(veml6075_dev_t *dev)
+{
+    uint8_t msg[] = {VEML6075_CMD_ID};
+    uint8_t value[2];
+    dev->i2c_transmit(dev->i2c_dev, VEML6075_ADDR, msg, sizeof(msg), value, sizeof(value));
+
+    return (value[1] << 8) + value[0];
+
 }

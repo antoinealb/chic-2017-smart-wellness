@@ -94,3 +94,18 @@ TEST(SunSensorDriver, CanReadUVB)
 
     CHECK_EQUAL(0x1242, uvb);
 }
+
+TEST(SunSensorDriver, CanReadChipID)
+{
+    uint8_t request[] = {0x0C};
+    uint8_t answer[] = {0x26, 0x00};
+
+    mock("i2c").expectOneCall("transmit")
+    .withParameter("addr", 0x20)
+    .withMemoryBufferParameter("tx", request, sizeof(request))
+    .withOutputParameterReturning("rx", answer, sizeof(answer));
+
+    uint16_t chip_id = veml6075_read_chip_id(&drv);
+
+    CHECK_EQUAL(VEML6075_CHIP_ID, chip_id);
+}
