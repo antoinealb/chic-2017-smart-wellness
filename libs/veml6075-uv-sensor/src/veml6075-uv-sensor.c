@@ -1,7 +1,7 @@
 #include <string.h>
 #include "veml6075-uv-sensor/veml6075-uv-sensor.h"
 
-#define VEML6075_ADDR 0x20
+#define VEML6075_ADDR 0x10
 
 #define VEML6075_CMD_CONF 0x00
 #define VEML6075_CMD_UVA  0x07

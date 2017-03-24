@@ -4,7 +4,7 @@
 
 void i2c_mock_transmit(void *dev,
                        uint8_t addr,
-                       const uint8_t *tx,
+                       uint8_t *tx,
                        size_t txbytes,
                        uint8_t *rx,
                        size_t rxbytes)
@@ -58,7 +58,7 @@ TEST(SunSensorDriver, CanConfigure)
     uint8_t data[] = {0, (1 << 1) | (1 << 3) | (2 << 4), 0};
 
     mock("i2c").expectOneCall("transmit")
-    .withParameter("addr", 0x20)
+    .withParameter("addr", 0x10)
     .withMemoryBufferParameter("tx", data, sizeof(data))
     .withOutputParameterReturning("rx", NULL, 0);
 
@@ -71,7 +71,7 @@ TEST(SunSensorDriver, CanReadUVA)
     uint8_t answer[] = {0x42, 0x12};
 
     mock("i2c").expectOneCall("transmit")
-    .withParameter("addr", 0x20)
+    .withParameter("addr", 0x10)
     .withMemoryBufferParameter("tx", data, sizeof(data))
     .withOutputParameterReturning("rx", answer, sizeof(answer));
 
@@ -86,7 +86,7 @@ TEST(SunSensorDriver, CanReadUVB)
     uint8_t answer[] = {0x42, 0x12};
 
     mock("i2c").expectOneCall("transmit")
-    .withParameter("addr", 0x20)
+    .withParameter("addr", 0x10)
     .withMemoryBufferParameter("tx", data, sizeof(data))
     .withOutputParameterReturning("rx", answer, sizeof(answer));
 
@@ -101,7 +101,7 @@ TEST(SunSensorDriver, CanReadChipID)
     uint8_t answer[] = {0x26, 0x00};
 
     mock("i2c").expectOneCall("transmit")
-    .withParameter("addr", 0x20)
+    .withParameter("addr", 0x10)
     .withMemoryBufferParameter("tx", request, sizeof(request))
     .withOutputParameterReturning("rx", answer, sizeof(answer));
 
