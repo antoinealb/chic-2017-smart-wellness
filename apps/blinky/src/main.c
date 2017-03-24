@@ -27,11 +27,32 @@
 #include "hal/hal_i2c.h"
 #include "mcu/stm32f4_bsp.h"
 #include "mcu/stm32f4xx_mynewt_hal.h"
+#include "veml6075-uv-sensor/veml6075-uv-sensor.h"
+
 #ifdef ARCH_sim
 #include "mcu/mcu_sim.h"
 #endif
 
 static volatile int g_task1_loops;
+
+void sensor_transmit(void *i2c_dev,
+                     uint8_t addr,
+                     uint8_t *tx,
+                     size_t tx_bytes,
+                     uint8_t *rx,
+                     size_t rx_bytes)
+{
+    struct hal_i2c_master_data rxdata = {.address = addr, .len = rx_bytes, .buffer = rx};
+    struct hal_i2c_master_data txdata = {.address = addr, .len = tx_bytes, .buffer = tx};
+
+
+    if (rx_bytes == 0) {
+        hal_i2c_master_write((int)i2c_dev, &txdata, HAL_MAX_DELAY, 1);
+    } else {
+        hal_i2c_master_write((int)i2c_dev, &txdata, HAL_MAX_DELAY, 0);
+        hal_i2c_master_read((int)i2c_dev, &rxdata, HAL_MAX_DELAY, 1);
+    }
+}
 
 /* For LED toggling */
 int g_led_pin;
@@ -48,6 +69,7 @@ int
 main(int argc, char **argv)
 {
     int rc;
+    veml6075_dev_t sensor;
 
 #ifdef ARCH_sim
     mcu_sim_parse_args(argc, argv);
@@ -57,6 +79,9 @@ main(int argc, char **argv)
 
     g_led_pin = LED_BLINK_PIN;
     hal_gpio_init_out(g_led_pin, 1);
+
+    veml6075_init(&sensor, sensor_transmit, (void *)0);
+    veml6075_configure(&sensor, VEML6075_TRIGGER_MANUAL, VEML6075_EXPOSURE_50MS, false);
 
     while (1) {
         ++g_task1_loops;
