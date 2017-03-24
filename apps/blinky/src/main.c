@@ -92,8 +92,8 @@ main(int argc, char **argv)
         /* Toggle the LED */
         hal_gpio_toggle(g_led_pin);
 
-        rc = hal_i2c_master_probe(0, 0x20, OS_TICKS_PER_SEC);
-        assert(rc == 0);
+        rc = veml6075_read_chip_id(&sensor);
+        assert(rc == VEML6075_CHIP_ID);
     }
     assert(0);
 
