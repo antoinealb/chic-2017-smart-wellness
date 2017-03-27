@@ -17,16 +17,15 @@
 # under the License.
 #
 
-pkg.name: apps/blinky
+pkg.name: apps/sensor-test
 pkg.type: app
-pkg.description: Basic example application which blinks an LED.
-pkg.author: "Apache Mynewt <dev@mynewt.incubator.apache.org>"
-pkg.homepage: "http://mynewt.apache.org/"
+pkg.description: Test application for the UV sensor
+pkg.author: "Antoine Albertelli <antoine@antoinealb.net>"
+pkg.homepage: "http://chi.camp"
 pkg.keywords:
 
 pkg.deps:
   - "@apache-mynewt-core/kernel/os"
   - "@apache-mynewt-core/hw/hal"
   - "@apache-mynewt-core/sys/console/full"
-  - "@apache-mynewt-core/hw/mcu/stm/stm32f4xx"
   - "libs/veml6075-uv-sensor"

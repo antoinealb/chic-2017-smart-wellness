@@ -1,7 +1,7 @@
 ### Package: targets/blinky-stm32
 pkg.name: "targets/blinky-stm32"
 pkg.type: "target"
-pkg.description: Blink an LED on STM32 for testing
-pkg.author: Antoine Albertelli <antoine@antoinealb.net>
-pkg.homepage: http://chi.camp
+pkg.description: "Blink an LED on STM32 for testing"
+pkg.author: "Antoine Albertelli <antoine@antoinealb.net>"
+pkg.homepage: "http://chi.camp"
 

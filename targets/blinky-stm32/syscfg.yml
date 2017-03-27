@@ -1,3 +1,4 @@
+### Package: targets/blinky-stm32
+
 syscfg.vals:
-    ### hw/bsp/stm32f4discovery
-    I2C_0: '1'
+    I2C_0: 1
