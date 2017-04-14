@@ -1,0 +1,10 @@
+pkg.name: apps/blinky
+pkg.type: app
+pkg.description: Hardware test application
+pkg.author: "Antoine Albertelli <antoine@antoinealb.net>"
+pkg.homepage: "http://chi.camp"
+pkg.keywords:
+pkg.deps:
+  - "@apache-mynewt-core/kernel/os"
+  - "@apache-mynewt-core/hw/hal"
+  - "@apache-mynewt-core/sys/console/full"
