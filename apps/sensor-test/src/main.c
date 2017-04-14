@@ -21,8 +21,6 @@
 #include "bsp/bsp.h"
 #include "hal/hal_gpio.h"
 #include "hal/hal_i2c.h"
-#include "mcu/stm32f4_bsp.h"
-#include "mcu/stm32f4xx_mynewt_hal.h"
 #include "veml6075-uv-sensor/veml6075-uv-sensor.h"
 
 #ifdef ARCH_sim
@@ -43,10 +41,10 @@ void sensor_transmit(void *i2c_dev,
 
 
     if (rx_bytes == 0) {
-        hal_i2c_master_write((int)i2c_dev, &txdata, HAL_MAX_DELAY, 1);
+        hal_i2c_master_write((int)i2c_dev, &txdata, UINT32_MAX, 1);
     } else {
-        hal_i2c_master_write((int)i2c_dev, &txdata, HAL_MAX_DELAY, 0);
-        hal_i2c_master_read((int)i2c_dev, &rxdata, HAL_MAX_DELAY, 1);
+        hal_i2c_master_write((int)i2c_dev, &txdata, UINT32_MAX, 0);
+        hal_i2c_master_read((int)i2c_dev, &rxdata, UINT32_MAX, 1);
     }
 }
 
