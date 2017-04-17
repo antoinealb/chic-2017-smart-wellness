@@ -24,7 +24,7 @@ def main():
     packages = set()
 
     dep = subprocess.check_output(
-        "./newt target dep {}".format(args.target).split())
+        "newt target dep {}".format(args.target).split())
 
     for line in dep.decode().splitlines()[1:]:
         res = re.search('\* (@?[\w/-]+)', line)
