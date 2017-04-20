@@ -12,6 +12,8 @@ SRC="$(git ls-tree --full-tree -r HEAD | grep -e "\.\(h\|c\|cpp\)$" | cut -f 2)"
 
 echo $SRC
 
+chmod -x $SRC
+
 # run it twice because uncrustify is not very smart
 uncrustify $UNCRUSTIFY_FLAGS $SRC
 uncrustify $UNCRUSTIFY_FLAGS $SRC
