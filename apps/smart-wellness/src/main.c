@@ -59,7 +59,7 @@ bleprph_print_conn_desc(struct ble_gap_conn_desc *desc)
     BLEPRPH_LOG(INFO, " peer_id_addr_type=%d peer_id_addr=",
                 desc->peer_id_addr.type);
     BLEPRPH_LOG(INFO, " conn_itvl=%d conn_latency=%d supervision_timeout=%d "
-                "encrypted=%d authenticated=%d bonded=%d\n",
+                      "encrypted=%d authenticated=%d bonded=%d\n",
                 desc->conn_itvl, desc->conn_latency,
                 desc->supervision_timeout,
                 desc->sec_state.encrypted,
@@ -109,7 +109,7 @@ bleprph_advertise(void)
     fields.name_len = strlen(name);
     fields.name_is_complete = 1;
 
-    fields.uuids16 = (ble_uuid16_t[]){
+    fields.uuids16 = (ble_uuid16_t[]) {
         BLE_UUID16_INIT(GATT_SVR_SVC_ALERT_UUID)
     };
     fields.num_uuids16 = 1;
@@ -155,71 +155,71 @@ bleprph_gap_event(struct ble_gap_event *event, void *arg)
     int rc;
 
     switch (event->type) {
-    case BLE_GAP_EVENT_CONNECT:
-        /* A new connection was established or a connection attempt failed. */
-        BLEPRPH_LOG(INFO, "connection %s; status=%d ",
-                       event->connect.status == 0 ? "established" : "failed",
-                       event->connect.status);
-        if (event->connect.status == 0) {
+        case BLE_GAP_EVENT_CONNECT:
+            /* A new connection was established or a connection attempt failed. */
+            BLEPRPH_LOG(INFO, "connection %s; status=%d ",
+                        event->connect.status == 0 ? "established" : "failed",
+                        event->connect.status);
+            if (event->connect.status == 0) {
+                rc = ble_gap_conn_find(event->connect.conn_handle, &desc);
+                assert(rc == 0);
+                bleprph_print_conn_desc(&desc);
+            }
+            BLEPRPH_LOG(INFO, "\n");
+
+            if (event->connect.status != 0) {
+                /* Connection failed; resume advertising. */
+                bleprph_advertise();
+            }
+            return 0;
+
+        case BLE_GAP_EVENT_DISCONNECT:
+            BLEPRPH_LOG(INFO, "disconnect; reason=%d ", event->disconnect.reason);
+            bleprph_print_conn_desc(&event->disconnect.conn);
+            BLEPRPH_LOG(INFO, "\n");
+
+            /* Connection terminated; resume advertising. */
+            bleprph_advertise();
+            return 0;
+
+        case BLE_GAP_EVENT_CONN_UPDATE:
+            /* The central has updated the connection parameters. */
+            BLEPRPH_LOG(INFO, "connection updated; status=%d ",
+                        event->conn_update.status);
             rc = ble_gap_conn_find(event->connect.conn_handle, &desc);
             assert(rc == 0);
             bleprph_print_conn_desc(&desc);
-        }
-        BLEPRPH_LOG(INFO, "\n");
+            BLEPRPH_LOG(INFO, "\n");
+            return 0;
 
-        if (event->connect.status != 0) {
-            /* Connection failed; resume advertising. */
-            bleprph_advertise();
-        }
-        return 0;
+        case BLE_GAP_EVENT_ENC_CHANGE:
+            /* Encryption has been enabled or disabled for this connection. */
+            BLEPRPH_LOG(INFO, "encryption change event; status=%d ",
+                        event->enc_change.status);
+            rc = ble_gap_conn_find(event->connect.conn_handle, &desc);
+            assert(rc == 0);
+            bleprph_print_conn_desc(&desc);
+            BLEPRPH_LOG(INFO, "\n");
+            return 0;
 
-    case BLE_GAP_EVENT_DISCONNECT:
-        BLEPRPH_LOG(INFO, "disconnect; reason=%d ", event->disconnect.reason);
-        bleprph_print_conn_desc(&event->disconnect.conn);
-        BLEPRPH_LOG(INFO, "\n");
+        case BLE_GAP_EVENT_SUBSCRIBE:
+            BLEPRPH_LOG(INFO, "subscribe event; conn_handle=%d attr_handle=%d "
+                              "reason=%d prevn=%d curn=%d previ=%d curi=%d\n",
+                        event->subscribe.conn_handle,
+                        event->subscribe.attr_handle,
+                        event->subscribe.reason,
+                        event->subscribe.prev_notify,
+                        event->subscribe.cur_notify,
+                        event->subscribe.prev_indicate,
+                        event->subscribe.cur_indicate);
+            return 0;
 
-        /* Connection terminated; resume advertising. */
-        bleprph_advertise();
-        return 0;
-
-    case BLE_GAP_EVENT_CONN_UPDATE:
-        /* The central has updated the connection parameters. */
-        BLEPRPH_LOG(INFO, "connection updated; status=%d ",
-                    event->conn_update.status);
-        rc = ble_gap_conn_find(event->connect.conn_handle, &desc);
-        assert(rc == 0);
-        bleprph_print_conn_desc(&desc);
-        BLEPRPH_LOG(INFO, "\n");
-        return 0;
-
-    case BLE_GAP_EVENT_ENC_CHANGE:
-        /* Encryption has been enabled or disabled for this connection. */
-        BLEPRPH_LOG(INFO, "encryption change event; status=%d ",
-                    event->enc_change.status);
-        rc = ble_gap_conn_find(event->connect.conn_handle, &desc);
-        assert(rc == 0);
-        bleprph_print_conn_desc(&desc);
-        BLEPRPH_LOG(INFO, "\n");
-        return 0;
-
-    case BLE_GAP_EVENT_SUBSCRIBE:
-        BLEPRPH_LOG(INFO, "subscribe event; conn_handle=%d attr_handle=%d "
-                          "reason=%d prevn=%d curn=%d previ=%d curi=%d\n",
-                    event->subscribe.conn_handle,
-                    event->subscribe.attr_handle,
-                    event->subscribe.reason,
-                    event->subscribe.prev_notify,
-                    event->subscribe.cur_notify,
-                    event->subscribe.prev_indicate,
-                    event->subscribe.cur_indicate);
-        return 0;
-
-    case BLE_GAP_EVENT_MTU:
-        BLEPRPH_LOG(INFO, "mtu update event; conn_handle=%d cid=%d mtu=%d\n",
-                    event->mtu.conn_handle,
-                    event->mtu.channel_id,
-                    event->mtu.value);
-        return 0;
+        case BLE_GAP_EVENT_MTU:
+            BLEPRPH_LOG(INFO, "mtu update event; conn_handle=%d cid=%d mtu=%d\n",
+                        event->mtu.conn_handle,
+                        event->mtu.channel_id,
+                        event->mtu.value);
+            return 0;
     }
 
     return 0;
@@ -252,7 +252,7 @@ main(void)
     int rc;
 
     /* Set initial BLE device address. */
-    memcpy(g_dev_addr, (uint8_t[6]){0x0a, 0x0a, 0x0a, 0x0a, 0x0a, 0x0a}, 6);
+    memcpy(g_dev_addr, (uint8_t[6]) {0x0a, 0x0a, 0x0a, 0x0a, 0x0a, 0x0a}, 6);
 
     /* Initialize OS */
     sysinit();
