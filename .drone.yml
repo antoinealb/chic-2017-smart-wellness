@@ -16,4 +16,4 @@ build:
       - ./beautify
 
       # Fail if some files were changed
-      - if [ -z $(git diff-index --name-only HEAD --) ]; then exit 1; fi
+      - bash -c "if [ -z $(git diff-index --name-only HEAD --) ]; then exit 1; fi"
