@@ -6,3 +6,14 @@ build:
     commands:
       - newt install -v
       - newt build ble-nrf51
+
+  lint:
+    # We use Arch as a base because it is lightweight and ships with latest
+    # uncrustify
+    image: base/archlinux
+    commands:
+      - pacman -Sy && pacman -S --noconfirm uncrustify git grep
+      - ./beautify
+
+      # Fail if some files were changed
+      - if [ -z $(git diff-index --name-only HEAD --) ]; then exit 1; fi
