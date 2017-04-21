@@ -1,10 +1,9 @@
 # CHIC 2017 "Smart Wellness"
 
-## Building
+[![Build Status](http://178.32.216.117:8000/api/badges/antoinealb/chic-2017-smart-wellness/status.svg)](http://178.32.216.117:8000/antoinealb/chic-2017-smart-wellness)
 
-This repo contains an example Apache Mynewt application called blinky.
-When executed on suitably equipped hardware, this application repeatedly blinks an LED.
-The below procedure describes how to build this application for the Apache Mynewt simulator.
+
+## Building
 
 1. Install Docker
 
