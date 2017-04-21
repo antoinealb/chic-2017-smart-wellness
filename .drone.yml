@@ -1,0 +1,8 @@
+build:
+  # TODO Build all targets
+  # TODO Run the tests
+  blinky:
+    image: mynewt/newt
+    commands:
+      - newt install -v
+      - newt build ble-nrf51
