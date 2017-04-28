@@ -40,3 +40,20 @@ cmake ..
 # Build and runs tests
 make check
 ```
+
+# Connections on the BLE module
+
+on the wire:
+
+1. 3v3
+2. gnd
+3. sda
+4. scl
+
+on the module:
+
+1. vin
+2. gnd
+3. P0.04
+4. P0.05
+
