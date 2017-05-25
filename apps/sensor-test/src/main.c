@@ -39,13 +39,17 @@ void sensor_transmit(void *i2c_dev,
     struct hal_i2c_master_data rxdata = {.address = addr, .len = rx_bytes, .buffer = rx};
     struct hal_i2c_master_data txdata = {.address = addr, .len = tx_bytes, .buffer = tx};
 
+    int rc=0;
 
     if (rx_bytes == 0) {
-        hal_i2c_master_write((int)i2c_dev, &txdata, UINT32_MAX, 1);
+        rc = hal_i2c_master_write((int)i2c_dev, &txdata, OS_TICKS_PER_SEC, 1);
     } else {
-        hal_i2c_master_write((int)i2c_dev, &txdata, UINT32_MAX, 0);
-        hal_i2c_master_read((int)i2c_dev, &rxdata, UINT32_MAX, 1);
+        rc = hal_i2c_master_write((int)i2c_dev, &txdata, OS_TICKS_PER_SEC, 0);
+        assert(rc == 0);
+        rc = hal_i2c_master_read((int)i2c_dev, &rxdata, OS_TICKS_PER_SEC, 1);
     }
+
+    assert(rc == 0);
 }
 
 /* For LED toggling */
