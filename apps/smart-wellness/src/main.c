@@ -266,7 +266,6 @@ main(void)
                  LOG_SYSLEVEL);
     ble_hs_cfg.reset_cb = bleprph_on_reset;
     ble_hs_cfg.sync_cb = bleprph_on_sync;
-    ble_hs_cfg.gatts_register_cb = gatt_svr_register_cb;
 
     rc = gatt_svr_init();
     assert(rc == 0);
