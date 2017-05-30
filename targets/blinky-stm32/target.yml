@@ -1,4 +1,0 @@
-### Target: targets/blinky-stm32
-target.app: "apps/sensor-test"
-target.bsp: "@apache-mynewt-core/hw/bsp/stm32f4discovery"
-target.build_profile: "debug"

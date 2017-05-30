@@ -1,4 +1,0 @@
-### Package: targets/blinky-stm32
-
-syscfg.vals:
-    I2C_0: 1
