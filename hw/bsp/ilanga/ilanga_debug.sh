@@ -28,7 +28,7 @@
 #  - NO_GDB set if we should not start gdb to debug
 #
 
-. $CORE_PATH/hw/scripts/jlink.sh
+. $CORE_PATH/hw/scripts/openocd.sh
 
 FILE_NAME=$BIN_BASENAME.elf
 
@@ -40,7 +40,4 @@ if [ $# -gt 2 ]; then
     EXTRA_GDB_CMDS="add-symbol-file $SPLIT_ELF_NAME 0x8000 -readnow"
 fi
 
-JLINK_DEV="nRF52"
-
-jlink_debug
-
+CFG="-s $BSP_PATH -f ilanga.cfg"

@@ -27,57 +27,17 @@
 #include "flash_map/flash_map.h"
 #include "hal/hal_bsp.h"
 #include "hal/hal_flash.h"
-#include "hal/hal_spi.h"
 #include "hal/hal_watchdog.h"
 #include "hal/hal_i2c.h"
 #include "mcu/nrf52_hal.h"
-#if MYNEWT_VAL(UART_0) || MYNEWT_VAL(UART_1)
-#include "uart/uart.h"
-#endif
+
 #if MYNEWT_VAL(UART_0)
+#include "uart/uart.h"
 #include "uart_hal/uart_hal.h"
 #endif
-#if MYNEWT_VAL(UART_1)
-#include "uart_bitbang/uart_bitbang.h"
-#endif
+
 #include "os/os_dev.h"
 #include "bsp.h"
-#if MYNEWT_VAL(LSM303DLHC_PRESENT)
-#include <lsm303dlhc/lsm303dlhc.h>
-static struct lsm303dlhc lsm303dlhc;
-#endif
-#if MYNEWT_VAL(BNO055_PRESENT)
-#include <bno055/bno055.h>
-#endif
-#if MYNEWT_VAL(TSL2561_PRESENT)
-#include <tsl2561/tsl2561.h>
-#endif
-#if MYNEWT_VAL(TCS34725_PRESENT)
-#include <tcs34725/tcs34725.h>
-#endif
-#if MYNEWT_VAL(BME280_PRESENT)
-#include <bme280/bme280.h>
-#endif
-
-#if MYNEWT_VAL(LSM303DLHC_PRESENT)
-static struct lsm303dlhc lsm303dlhc;
-#endif
-
-#if MYNEWT_VAL(BNO055_PRESENT)
-static struct bno055 bno055;
-#endif
-
-#if MYNEWT_VAL(TSL2561_PRESENT)
-static struct tsl2561 tsl2561;
-#endif
-
-#if MYNEWT_VAL(TCS34725_PRESENT)
-static struct tcs34725 tcs34725;
-#endif
-
-#if MYNEWT_VAL(BME280_PRESENT)
-static struct bme280 bme280;
-#endif
 
 #if MYNEWT_VAL(UART_0)
 static struct uart_dev os_bsp_uart0;
@@ -89,41 +49,11 @@ static const struct nrf52_uart_cfg os_bsp_uart0_cfg = {
 };
 #endif
 
-#if MYNEWT_VAL(UART_1)
-static struct uart_dev os_bsp_bitbang_uart1;
-static const struct uart_bitbang_conf os_bsp_uart1_cfg = {
-    .ubc_txpin = MYNEWT_VAL(UART_1_PIN_TX),
-    .ubc_rxpin = MYNEWT_VAL(UART_1_PIN_RX),
-    .ubc_cputimer_freq = MYNEWT_VAL(OS_CPUTIME_FREQ),
-};
-#endif
-
-#if MYNEWT_VAL(SPI_0_MASTER)
-/*
- * NOTE: Our HAL expects that the SS pin, if used, is treated as a gpio line
- * and is handled outside the SPI routines.
- */
-static const struct nrf52_hal_spi_cfg os_bsp_spi0m_cfg = {
-    .sck_pin      = 23,
-    .mosi_pin     = 24,
-    .miso_pin     = 25,
-};
-#endif
-
-#if MYNEWT_VAL(SPI_0_SLAVE)
-static const struct nrf52_hal_spi_cfg os_bsp_spi0s_cfg = {
-    .sck_pin      = 23,
-    .mosi_pin     = 24,
-    .miso_pin     = 25,
-    .ss_pin       = 22,
-};
-#endif
-
 #if MYNEWT_VAL(I2C_0)
 static const struct nrf52_hal_i2c_cfg hal_i2c_cfg = {
-    .scl_pin = 27,
-    .sda_pin = 26,
-    .i2c_frequency = 100    /* 100 kHz */
+    .scl_pin = MYNEWT_VAL(I2C_0_PIN_SCL),
+    .sda_pin = MYNEWT_VAL(I2C_0_PIN_sda),
+    .i2c_frequency = MYNEWT_VAL(I2C_0_FREQUENCY),
 };
 #endif
 
@@ -187,67 +117,6 @@ hal_bsp_get_nvic_priority(int irq_num, uint32_t pri)
     return cfg_pri;
 }
 
-#if MYNEWT_VAL(LSM303DLHC_PRESENT) || MYNEWT_VAL(BNO055_PRESENT)
-static int
-accel_init(struct os_dev *dev, void *arg)
-{
-   return (0);
-}
-#endif
-
-#if MYNEWT_VAL(TSL2561_PRESENT)
-static int
-light_init(struct os_dev *dev, void *arg)
-{
-    return (0);
-}
-#endif
-
-#if MYNEWT_VAL(TCS34725_PRESENT)
-static int
-color_init(struct os_dev *dev, void *arg)
-{
-    return (0);
-}
-#endif
-
-static void
-sensor_dev_create(void)
-{
-    int rc;
-
-    (void)rc;
-#if MYNEWT_VAL(LSM303DLHC_PRESENT)
-    rc = os_dev_create((struct os_dev *) &lsm303dlhc, "accel0",
-      OS_DEV_INIT_PRIMARY, 0, accel_init, NULL);
-    assert(rc == 0);
-#endif
-
-#if MYNEWT_VAL(BNO055_PRESENT)
-    rc = os_dev_create((struct os_dev *) &bno055, "accel1",
-      OS_DEV_INIT_PRIMARY, 0, accel_init, NULL);
-    assert(rc == 0);
-#endif
-
-#if MYNEWT_VAL(TSL2561_PRESENT)
-    rc = os_dev_create((struct os_dev *) &tsl2561, "light0",
-      OS_DEV_INIT_PRIMARY, 0, light_init, NULL);
-    assert(rc == 0);
-#endif
-
-#if MYNEWT_VAL(TCS34725_PRESENT)
-    rc = os_dev_create((struct os_dev *) &tcs34725, "color0",
-      OS_DEV_INIT_PRIMARY, 0, color_init, NULL);
-    assert(rc == 0);
-#endif
-
-#if MYNEWT_VAL(BME280_PRESENT)
-    rc = os_dev_create((struct os_dev *) &bme280, "bme280",
-      OS_DEV_INIT_PRIMARY, 0, color_init, NULL);
-    assert(rc == 0);
-#endif
-}
-
 void
 hal_bsp_init(void)
 {
@@ -289,27 +158,9 @@ hal_bsp_init(void)
     assert(rc == 0);
 #endif
 
-#if MYNEWT_VAL(SPI_0_MASTER)
-    rc = hal_spi_init(0, (void *)&os_bsp_spi0m_cfg, HAL_SPI_TYPE_MASTER);
-    assert(rc == 0);
-#endif
-
-#if MYNEWT_VAL(SPI_0_SLAVE)
-    rc = hal_spi_init(0, (void *)&os_bsp_spi0s_cfg, HAL_SPI_TYPE_SLAVE);
-    assert(rc == 0);
-#endif
-
 #if MYNEWT_VAL(UART_0)
     rc = os_dev_create((struct os_dev *) &os_bsp_uart0, "uart0",
       OS_DEV_INIT_PRIMARY, 0, uart_hal_init, (void *)&os_bsp_uart0_cfg);
     assert(rc == 0);
 #endif
-
-#if MYNEWT_VAL(UART_1)
-    rc = os_dev_create((struct os_dev *) &os_bsp_bitbang_uart1, "uart1",
-      OS_DEV_INIT_PRIMARY, 0, uart_bitbang_init, (void *)&os_bsp_uart1_cfg);
-    assert(rc == 0);
-#endif
-
-    sensor_dev_create();
 }

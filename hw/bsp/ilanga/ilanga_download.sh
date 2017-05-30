@@ -28,13 +28,14 @@
 #  - FLASH_OFFSET contains the flash offset to download to
 #  - BOOT_LOADER is set if downloading a bootloader
 
-. $CORE_PATH/hw/scripts/jlink.sh
+. $CORE_PATH/hw/scripts/openocd.sh
+
+CFG="-s $BSP_PATH -f ilanga.cfg"
 
 if [ "$MFG_IMAGE" ]; then
     FLASH_OFFSET=0x0
 fi
 
-JLINK_DEV="nRF52"
-
 common_file_to_load
-jlink_load
+openocd_load
+openocd_reset_run
