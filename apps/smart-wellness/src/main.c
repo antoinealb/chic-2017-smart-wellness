@@ -30,19 +30,45 @@
 #include "hal/hal_system.h"
 #include "config/config.h"
 #include "split/split.h"
+#include "hal/hal_i2c.h"
 
 /* BLE */
 #include "nimble/ble.h"
 #include "host/ble_hs.h"
 #include "services/gap/ble_svc_gap.h"
 
-/* Application-specified header. */
 #include "bleprph.h"
+#include "main.h"
 
 /** Log data. */
 struct log bleprph_log;
 
 static int bleprph_gap_event(struct ble_gap_event *event, void *arg);
+
+veml6075_dev_t uv_sensor;
+
+void sensor_transmit(void *i2c_dev,
+                     uint8_t addr,
+                     uint8_t *tx,
+                     size_t tx_bytes,
+                     uint8_t *rx,
+                     size_t rx_bytes)
+{
+    struct hal_i2c_master_data rxdata = {.address = addr, .len = rx_bytes, .buffer = rx};
+    struct hal_i2c_master_data txdata = {.address = addr, .len = tx_bytes, .buffer = tx};
+
+    int rc = 0;
+
+    if (rx_bytes == 0) {
+        rc = hal_i2c_master_write((int)i2c_dev, &txdata, OS_TICKS_PER_SEC, 1);
+    } else {
+        rc = hal_i2c_master_write((int)i2c_dev, &txdata, OS_TICKS_PER_SEC, 0);
+        assert(rc == 0);
+        rc = hal_i2c_master_read((int)i2c_dev, &rxdata, OS_TICKS_PER_SEC, 1);
+    }
+
+    assert(rc == 0);
+}
 
 /**
  * Logs information about a connection to the console.
@@ -275,6 +301,9 @@ main(void)
     assert(rc == 0);
 
     conf_load();
+
+    veml6075_init(&uv_sensor, sensor_transmit, (void *)0);
+    veml6075_configure(&uv_sensor, VEML6075_TRIGGER_MANUAL, VEML6075_EXPOSURE_50MS, false);
 
     /* If this app is acting as the loader in a split image setup, jump into
      * the second stage application instead of starting the OS.

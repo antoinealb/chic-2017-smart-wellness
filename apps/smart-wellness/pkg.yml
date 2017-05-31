@@ -38,3 +38,5 @@ pkg.deps:
     - "@apache-mynewt-core/sys/stats/full"
     - "@apache-mynewt-core/sys/sysinit"
     - "@apache-mynewt-core/sys/id"
+    - "@apache-mynewt-core/sys/id"
+    - "libs/veml6075-uv-sensor"
