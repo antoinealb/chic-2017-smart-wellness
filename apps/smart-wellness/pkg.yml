@@ -29,7 +29,6 @@ pkg.deps:
     - "@apache-mynewt-core/mgmt/newtmgr"
     - "@apache-mynewt-core/net/nimble/controller"
     - "@apache-mynewt-core/net/nimble/host"
-    - "@apache-mynewt-core/net/nimble/host/services/ans"
     - "@apache-mynewt-core/net/nimble/host/services/gap"
     - "@apache-mynewt-core/net/nimble/host/services/gatt"
     - "@apache-mynewt-core/net/nimble/host/store/ram"
