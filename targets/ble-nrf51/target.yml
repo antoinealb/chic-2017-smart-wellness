@@ -1,4 +1,4 @@
 ### Target: targets/ble-nrf51
-target.app: "apps/sensor-test"
+target.app: "apps/smart-wellness"
 target.bsp: "@apache-mynewt-core/hw/bsp/nrf51-blenano"
-target.build_profile: "debug"
+target.build_profile: "optimized"
