@@ -271,7 +271,7 @@ main(void)
     assert(rc == 0);
 
     /* Set the default device name. */
-    rc = ble_svc_gap_device_name_set("smart-wellness");
+    rc = ble_svc_gap_device_name_set("ilanga");
     assert(rc == 0);
 
     conf_load();
