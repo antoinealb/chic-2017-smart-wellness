@@ -25,7 +25,7 @@ syscfg.defs:
 
     XTAL_32768:
         description: 'External 32k oscillator available.'
-        value: 1
+        value: 0
 
     UART_0:
         description: 'Whether to enable UART0'
