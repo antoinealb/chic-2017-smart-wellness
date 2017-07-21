@@ -40,4 +40,7 @@ if [ $# -gt 2 ]; then
     EXTRA_GDB_CMDS="add-symbol-file $SPLIT_ELF_NAME 0x8000 -readnow"
 fi
 
+EXTRA_JTAG_CMD="$EXTRA_JTAG_CMD; nrf52.cpu configure -event gdb-detach {shutdown}"
 CFG="-s $BSP_PATH -f ilanga.cfg"
+
+openocd_debug
