@@ -46,6 +46,7 @@ def main():
         if pkg.startswith('@'):
             pkg = pkg.replace('@', 'repos/', 1)
         files += glob.glob(pkg + '/src/**/*.c', recursive=True)
+        files += glob.glob(pkg + '/src/**/*.s', recursive=True)
         files += glob.glob(pkg + '/include/**/*.h', recursive=True)
 
     subprocess.call('ctags --extra=+f'.split() + files)
