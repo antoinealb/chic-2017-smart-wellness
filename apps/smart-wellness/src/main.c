@@ -264,6 +264,20 @@ bleprph_on_sync(void)
     bleprph_advertise();
 }
 
+#define BLINK_PRIO (254)
+struct os_task blink_task;
+os_stack_t blink_stack[256];
+
+static void blink_task_handler(void *p)
+{
+    (void) p;
+
+    while (true) {
+        os_time_delay(0.1 * OS_TICKS_PER_SEC);
+        hal_gpio_toggle(LED_BLINK_PIN);
+    }
+}
+
 /**
  * main
  *
@@ -304,19 +318,13 @@ main(void)
 
     veml6075_init(&uv_sensor, sensor_transmit, (void *)0);
     veml6075_configure(&uv_sensor, VEML6075_TRIGGER_MANUAL, VEML6075_EXPOSURE_50MS, false);
+    hal_gpio_init_out(LED_BLINK_PIN, 1);
 
-    /* If this app is acting as the loader in a split image setup, jump into
-     * the second stage application instead of starting the OS.
-     */
-#if MYNEWT_VAL(SPLIT_LOADER)
-    {
-        void *entry;
-        rc = split_app_go(&entry, true);
-        if (rc == 0) {
-            hal_system_start(entry);
-        }
-    }
-#endif
+    os_task_init(&blink_task, "blink", blink_task_handler, NULL,
+            BLINK_PRIO, OS_WAIT_FOREVER, blink_stack,
+            sizeof(blink_stack) / sizeof(blink_stack[0]));
+
+
 
     /*
      * As the last thing, process events from default event queue.
