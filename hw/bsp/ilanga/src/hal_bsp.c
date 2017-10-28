@@ -51,8 +51,8 @@ static const struct nrf52_uart_cfg os_bsp_uart0_cfg = {
 
 #if MYNEWT_VAL(I2C_0)
 static const struct nrf52_hal_i2c_cfg hal_i2c_cfg = {
-    .scl_pin = MYNEWT_VAL(I2C_0_PIN_SCL),
-    .sda_pin = MYNEWT_VAL(I2C_0_PIN_sda),
+    .scl_pin = MYNEWT_VAL(I2C_0_SCL_PIN),
+    .sda_pin = MYNEWT_VAL(I2C_0_SDA_PIN),
     .i2c_frequency = MYNEWT_VAL(I2C_0_FREQUENCY),
 };
 #endif
