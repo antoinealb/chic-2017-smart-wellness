@@ -57,3 +57,29 @@ on the module:
 3. P0.04
 4. P0.05
 
+
+## Patching OpenOCD for nrf52 support
+
+First, clone the OpenOCD source code somewhere appropriate
+
+    git clone git://git.code.sf.net/p/openocd/code openocd
+
+Then you can build OpenOCD (change the prefix for your use case):
+
+    ./bootstrap
+    ./configure \
+        --prefix=$HOME/custom-binaries/ \
+        --program-prefix=nrf52- \
+        --enable-aice \
+        --enable-amtjtagaccel \
+        --enable-armjtagew \
+        --enable-cmsis-dap \
+        --enable-dummy \
+        --enable-ftdi \
+        --enable-openjtag_ftdi \
+        --enable-stlink
+
+    make
+    make install
+
+OpenOCD git commit 41092636 was tested to be working.
