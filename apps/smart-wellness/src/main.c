@@ -317,7 +317,7 @@ main(void)
     conf_load();
 
     veml6075_init(&uv_sensor, sensor_transmit, (void *)0);
-    veml6075_configure(&uv_sensor, VEML6075_TRIGGER_MANUAL, VEML6075_EXPOSURE_50MS, false);
+    veml6075_configure(&uv_sensor, VEML6075_TRIGGER_AUTO, VEML6075_EXPOSURE_400MS, false);
     hal_gpio_init_out(LED_BLINK_PIN, 1);
 
     os_task_init(&blink_task, "blink", blink_task_handler, NULL,
