@@ -1,0 +1,3 @@
+### Target: targets/nrf52-boot
+target.app: "@apache-mynewt-core/apps/boot"
+target.bsp: "hw/bsp/ilanga"

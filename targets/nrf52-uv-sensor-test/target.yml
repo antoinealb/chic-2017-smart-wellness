@@ -1,0 +1,3 @@
+### Target: targets/nrf52-uv-sensor-test
+target.app: "apps/sensor-test"
+target.bsp: "hw/bsp/ilanga"
