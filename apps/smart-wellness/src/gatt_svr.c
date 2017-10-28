@@ -38,7 +38,16 @@ static const ble_uuid128_t gatt_svr_svc_sensor_test_chipid_uuid =
     BLE_UUID128_INIT(0x7a, 0xfd, 0xfa, 0x8e, 0x87, 0x36, 0xb4, 0x98,
                      0x39, 0x44, 0xa1, 0x27, 0xd6, 0xcc, 0x08, 0x0b);
 
-static int gatt_svr_chr_access_sensor_test_chipd(uint16_t conn_handle,
+/* cc7e9436-df5d-47c6-be2d-ee1490931b78 */
+static const ble_uuid128_t gatt_svr_svc_sensor_test_uva_uuid =
+    BLE_UUID128_INIT(0x78, 0x1b, 0x93, 0x90, 0x14, 0xee, 0x2d, 0xbe, 0xc6, 0x47, 0x5d, 0xdf, 0x36, 0x94, 0x7e, 0xcc);
+
+
+/* bfdaa81e-8456-41f0-96f4-082e5cee2f00 */
+static const ble_uuid128_t gatt_svr_svc_sensor_test_uvb_uuid =
+    BLE_UUID128_INIT(0x00, 0x2f, 0xee, 0x5c, 0x2e, 0x08, 0xf4, 0x96, 0xf0, 0x41, 0x56, 0x84, 0x1e, 0xa8, 0xda, 0xbf);
+
+static int gatt_svr_chr_access_sensor_test_chipid(uint16_t conn_handle,
                                                  uint16_t attr_handle,
                                                  struct ble_gatt_access_ctxt *ctxt,
                                                  void *arg)
@@ -53,6 +62,36 @@ static int gatt_svr_chr_access_sensor_test_chipd(uint16_t conn_handle,
     return rc == 0 ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
 }
 
+static int gatt_svr_chr_access_sensor_test_uva(uint16_t conn_handle,
+                                                 uint16_t attr_handle,
+                                                 struct ble_gatt_access_ctxt *ctxt,
+                                                 void *arg)
+{
+    int rc;
+
+    uint16_t uv = veml6075_read_uva(&uv_sensor);
+    uv = htobe16(uv);
+
+    rc = os_mbuf_append(ctxt->om, &uv, sizeof uv);
+    return rc == 0 ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
+}
+
+static int gatt_svr_chr_access_sensor_test_uvb(uint16_t conn_handle,
+                                                 uint16_t attr_handle,
+                                                 struct ble_gatt_access_ctxt *ctxt,
+                                                 void *arg)
+{
+    int rc;
+
+    uint16_t uv = veml6075_read_uvb(&uv_sensor);
+    uv = htobe16(uv);
+
+    rc = os_mbuf_append(ctxt->om, &uv, sizeof uv);
+    return rc == 0 ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
+}
+
+
+
 static const struct ble_gatt_svc_def gatt_svr_svcs[] = {
     {
         /*** Service: Sensor test. */
@@ -62,9 +101,21 @@ static const struct ble_gatt_svc_def gatt_svr_svcs[] = {
             {
                 /*** Characteristic: Chip ID. */
                 .uuid = &gatt_svr_svc_sensor_test_chipid_uuid.u,
-                .access_cb = gatt_svr_chr_access_sensor_test_chipd,
+                .access_cb = gatt_svr_chr_access_sensor_test_chipid,
                 .flags = BLE_GATT_CHR_F_READ,
             }, {
+                /*** Characteristic: UVA. */
+                .uuid = &gatt_svr_svc_sensor_test_uva_uuid.u,
+                .access_cb = gatt_svr_chr_access_sensor_test_uva,
+                .flags = BLE_GATT_CHR_F_READ,
+            }, {
+                /*** Characteristic: UVB. */
+                .uuid = &gatt_svr_svc_sensor_test_uvb_uuid.u,
+                .access_cb = gatt_svr_chr_access_sensor_test_uvb,
+                .flags = BLE_GATT_CHR_F_READ,
+            }, {
+
+
                 0, /* No more characteristics in this service. */
             }
         },
