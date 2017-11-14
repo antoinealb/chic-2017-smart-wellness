@@ -16,40 +16,7 @@
 #include <CppUTest/TestHarness.h>
 #include <CppUTestExt/MockSupport.h>
 #include "veml6075-uv-sensor/veml6075-uv-sensor.h"
-
-void i2c_mock_transmit(void *dev,
-                       uint8_t addr,
-                       uint8_t *tx,
-                       size_t txbytes,
-                       uint8_t *rx,
-                       size_t rxbytes)
-{
-    (void) dev;
-    (void) rxbytes;
-
-    mock("i2c").actualCall("transmit")
-    .withParameter("addr", addr)
-    .withMemoryBufferParameter("tx", tx, txbytes)
-    .withOutputParameter("rx", rx);
-}
-
-TEST_GROUP(I2CMock)
-{
-};
-
-TEST(I2CMock, MockWorks)
-{
-    uint8_t data[] = {1, 2, 3};
-    uint8_t rx_data[] = {1, 2, 3, 4};
-    uint8_t rx[4];
-
-    mock("i2c").expectOneCall("transmit")
-    .withParameter("addr", 0x42)
-    .withMemoryBufferParameter("tx", data, sizeof(data))
-    .withOutputParameterReturning("rx", rx_data, sizeof(rx_data));
-
-    i2c_mock_transmit(NULL, 0x42, data, sizeof(data), rx, sizeof(rx));
-}
+#include "i2c_mocks.hpp"
 
 TEST_GROUP(SunSensorDriver)
 {
