@@ -22,6 +22,7 @@
 #include "hal/hal_gpio.h"
 #include "hal/hal_i2c.h"
 #include "veml6075-uv-sensor/veml6075-uv-sensor.h"
+#include "lis2-accelerometer/lis2-accelerometer.h"
 
 #ifdef ARCH_sim
 #include "mcu/mcu_sim.h"
@@ -68,6 +69,7 @@ main(int argc, char **argv)
 {
     int rc;
     veml6075_dev_t sensor;
+    lis2_dev_t accelerometer;
 
 #ifdef ARCH_sim
     mcu_sim_parse_args(argc, argv);
@@ -81,6 +83,8 @@ main(int argc, char **argv)
     veml6075_init(&sensor, sensor_transmit, (void *)0);
     veml6075_configure(&sensor, VEML6075_TRIGGER_MANUAL, VEML6075_EXPOSURE_50MS, false);
 
+    lis2_init(&accelerometer, sensor_transmit, (void *)0);
+
     while (1) {
         ++g_task1_loops;
 
@@ -92,6 +96,10 @@ main(int argc, char **argv)
 
         rc = veml6075_read_chip_id(&sensor);
         assert(rc == VEML6075_CHIP_ID);
+
+        rc = lis2_read_chip_id(&accelerometer);
+        assert(rc == LIS2_CHIP_ID);
+
     }
     assert(0);
 

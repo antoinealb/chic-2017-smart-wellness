@@ -10,3 +10,4 @@ pkg.deps:
   - "@apache-mynewt-core/hw/hal"
   - "@apache-mynewt-core/sys/console/full"
   - "libs/veml6075-uv-sensor"
+  - "libs/lis2-accelerometer"

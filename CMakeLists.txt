@@ -5,17 +5,20 @@ set(CMAKE_BUILD_TYPE Debug)
 
 include_directories(
     libs/veml6075-uv-sensor/include
+    libs/lis2-accelerometer/include
     )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wall -Wextra")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
 
 file(GLOB veml6075 libs/veml6075-uv-sensor/src/*.c)
+file(GLOB lis2 libs/lis2-accelerometer/src/*.c)
 file(GLOB_RECURSE tests tests/*.cpp)
 
 add_executable(
     tests
     ${veml6075}
+    ${lis2}
     ${tests}
     )
 
