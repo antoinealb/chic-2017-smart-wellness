@@ -89,7 +89,7 @@ hal_bsp_core_dump(int *area_cnt)
 int
 hal_bsp_power_state(int state)
 {
-    return (0);
+    return 0;
 }
 
 /**
@@ -107,12 +107,13 @@ hal_bsp_get_nvic_priority(int irq_num, uint32_t pri)
     uint32_t cfg_pri;
 
     switch (irq_num) {
-    /* Radio gets highest priority */
-    case RADIO_IRQn:
-        cfg_pri = 0;
-        break;
-    default:
-        cfg_pri = pri;
+        /* Radio gets highest priority */
+        case RADIO_IRQn:
+            cfg_pri = 0;
+            break;
+
+        default:
+            cfg_pri = pri;
     }
     return cfg_pri;
 }
@@ -160,7 +161,7 @@ hal_bsp_init(void)
 
 #if MYNEWT_VAL(UART_0)
     rc = os_dev_create((struct os_dev *) &os_bsp_uart0, "uart0",
-      OS_DEV_INIT_PRIMARY, 0, uart_hal_init, (void *)&os_bsp_uart0_cfg);
+                       OS_DEV_INIT_PRIMARY, 0, uart_hal_init, (void *)&os_bsp_uart0_cfg);
     assert(rc == 0);
 #endif
 }

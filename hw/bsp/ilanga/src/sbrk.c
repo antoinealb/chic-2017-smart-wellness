@@ -20,12 +20,13 @@
 #include <hal/hal_bsp.h>
 
 /* put these in the data section so they are not cleared by _start */
-static char *sbrkBase __attribute__ ((section (".data")));
-static char *sbrkLimit __attribute__ ((section (".data")));
-static char *brk __attribute__ ((section (".data")));
+static char *sbrkBase __attribute__ ((section(".data")));
+static char *sbrkLimit __attribute__ ((section(".data")));
+static char *brk __attribute__ ((section(".data")));
 
 void
-_sbrkInit(char *base, char *limit) {
+_sbrkInit(char *base, char *limit)
+{
     sbrkBase = base;
     sbrkLimit = limit;
     brk = base;

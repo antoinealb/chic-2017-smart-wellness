@@ -321,8 +321,8 @@ main(void)
     hal_gpio_init_out(LED_BLINK_PIN, 1);
 
     os_task_init(&blink_task, "blink", blink_task_handler, NULL,
-            BLINK_PRIO, OS_WAIT_FOREVER, blink_stack,
-            sizeof(blink_stack) / sizeof(blink_stack[0]));
+                 BLINK_PRIO, OS_WAIT_FOREVER, blink_stack,
+                 sizeof(blink_stack) / sizeof(blink_stack[0]));
 
 
 

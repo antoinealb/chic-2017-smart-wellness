@@ -15,5 +15,7 @@ echo $SRC
 chmod -x $SRC
 
 # run it twice because uncrustify is not very smart
-uncrustify $UNCRUSTIFY_FLAGS $SRC
-uncrustify $UNCRUSTIFY_FLAGS $SRC
+for i in $SRC; do
+    uncrustify $UNCRUSTIFY_FLAGS $i || true
+    uncrustify $UNCRUSTIFY_FLAGS $i || true
+done

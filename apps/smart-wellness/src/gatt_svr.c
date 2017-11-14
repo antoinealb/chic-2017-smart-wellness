@@ -40,17 +40,47 @@ static const ble_uuid128_t gatt_svr_svc_sensor_test_chipid_uuid =
 
 /* cc7e9436-df5d-47c6-be2d-ee1490931b78 */
 static const ble_uuid128_t gatt_svr_svc_sensor_test_uva_uuid =
-    BLE_UUID128_INIT(0x78, 0x1b, 0x93, 0x90, 0x14, 0xee, 0x2d, 0xbe, 0xc6, 0x47, 0x5d, 0xdf, 0x36, 0x94, 0x7e, 0xcc);
+    BLE_UUID128_INIT(0x78,
+                     0x1b,
+                     0x93,
+                     0x90,
+                     0x14,
+                     0xee,
+                     0x2d,
+                     0xbe,
+                     0xc6,
+                     0x47,
+                     0x5d,
+                     0xdf,
+                     0x36,
+                     0x94,
+                     0x7e,
+                     0xcc);
 
 
 /* bfdaa81e-8456-41f0-96f4-082e5cee2f00 */
 static const ble_uuid128_t gatt_svr_svc_sensor_test_uvb_uuid =
-    BLE_UUID128_INIT(0x00, 0x2f, 0xee, 0x5c, 0x2e, 0x08, 0xf4, 0x96, 0xf0, 0x41, 0x56, 0x84, 0x1e, 0xa8, 0xda, 0xbf);
+    BLE_UUID128_INIT(0x00,
+                     0x2f,
+                     0xee,
+                     0x5c,
+                     0x2e,
+                     0x08,
+                     0xf4,
+                     0x96,
+                     0xf0,
+                     0x41,
+                     0x56,
+                     0x84,
+                     0x1e,
+                     0xa8,
+                     0xda,
+                     0xbf);
 
 static int gatt_svr_chr_access_sensor_test_chipid(uint16_t conn_handle,
-                                                 uint16_t attr_handle,
-                                                 struct ble_gatt_access_ctxt *ctxt,
-                                                 void *arg)
+                                                  uint16_t attr_handle,
+                                                  struct ble_gatt_access_ctxt *ctxt,
+                                                  void *arg)
 {
     int rc;
 
@@ -63,9 +93,9 @@ static int gatt_svr_chr_access_sensor_test_chipid(uint16_t conn_handle,
 }
 
 static int gatt_svr_chr_access_sensor_test_uva(uint16_t conn_handle,
-                                                 uint16_t attr_handle,
-                                                 struct ble_gatt_access_ctxt *ctxt,
-                                                 void *arg)
+                                               uint16_t attr_handle,
+                                               struct ble_gatt_access_ctxt *ctxt,
+                                               void *arg)
 {
     int rc;
 
@@ -77,9 +107,9 @@ static int gatt_svr_chr_access_sensor_test_uva(uint16_t conn_handle,
 }
 
 static int gatt_svr_chr_access_sensor_test_uvb(uint16_t conn_handle,
-                                                 uint16_t attr_handle,
-                                                 struct ble_gatt_access_ctxt *ctxt,
-                                                 void *arg)
+                                               uint16_t attr_handle,
+                                               struct ble_gatt_access_ctxt *ctxt,
+                                               void *arg)
 {
     int rc;
 

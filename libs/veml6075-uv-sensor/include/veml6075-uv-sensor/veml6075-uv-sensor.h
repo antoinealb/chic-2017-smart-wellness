@@ -25,12 +25,12 @@ extern "C" {
 
 #define VEML6075_CHIP_ID 0x0026
 
-typedef void (*veml7075_i2c_transmit_fn)(void *dev, uint8_t addr, uint8_t *tx, size_t txbytes,
+typedef void (*veml6075_i2c_transmit_fn)(void *dev, uint8_t addr, uint8_t *tx, size_t txbytes,
                                          uint8_t *rx, size_t rxbytes);
 
 typedef struct {
     void *i2c_dev;
-    veml7075_i2c_transmit_fn i2c_transmit;
+    veml6075_i2c_transmit_fn i2c_transmit;
 } veml6075_dev_t;
 
 enum veml6075_trigger_mode {
@@ -46,7 +46,7 @@ enum veml6075_integration_time {
     VEML6075_EXPOSURE_800MS=4
 };
 
-void veml6075_init(veml6075_dev_t *dev, veml7075_i2c_transmit_fn i2c_transmit, void *i2c_dev);
+void veml6075_init(veml6075_dev_t *dev, veml6075_i2c_transmit_fn i2c_transmit, void *i2c_dev);
 
 /** Configures the attached sensor.
  *
