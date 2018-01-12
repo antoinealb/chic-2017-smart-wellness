@@ -1,0 +1,9 @@
+pkg.name: libs/lis2-accelerometer
+pkg.description: "STMicro LIS2 accelerometer"
+pkg.author: "Antoine Albertelli <antoine@antoinealb.net>"
+pkg.homepage: "http://chi.camp"
+pkg.keywords:
+  - accelerometer
+  - sensor
+
+pkg.deps:
