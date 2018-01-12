@@ -40,7 +40,7 @@ extern uint8_t _ram_start;
 #define RAM_SIZE        0x10000
 
 /* LED pins */
-#define LED_BLINK_PIN   (4)
+#define LED_BLINK_PIN   (18)
 
 /* UART info */
 #define CONSOLE_UART    "uart0"
